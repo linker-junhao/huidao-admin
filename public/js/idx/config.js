@@ -4,7 +4,7 @@ const idxConfig = {
     clientHost: 'http://localhost'
   },
   dev: {
-    serverHost: 'http://127.0.0.1',
+    serverHost: 'http://rfdjlrj.gnway.org:43294',
     clientHost: 'http://127.0.0.1'
   }
 }

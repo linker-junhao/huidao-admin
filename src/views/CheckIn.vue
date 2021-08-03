@@ -94,10 +94,17 @@
           ref="check-in-record"
           v-show="nowCheckInId !== 0"
           :patch-deal-style="{position: 'absolute', top: '-40px', width: '240px', left: '0'}"
-          :ops="['edit', 'delete', 'refresh']"
+          :ops="['delete', 'refresh']"
           :col-show-set-btn="false"
           :src-url="'/check_in_record/' + nowCheckInId + '?activity_id=' + activity_id"
           :new-one-box-opts="{width: '40%'}"
+          :extract-id="(theTab) => {
+            const ids = theTab.tableOptions.tableSelected
+              .map(s => s.check_in_record.map(r => r.id))
+              .flat()
+            return ids
+          }"
+          :reload-after-delete="true"
           :columns="checkInListColumnDefine">
           <template v-slot:searchBar="scope">
             <el-form :inline="true">

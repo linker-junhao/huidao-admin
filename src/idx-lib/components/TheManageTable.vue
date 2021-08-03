@@ -147,6 +147,19 @@ export default {
     }
   },
   props: {
+    //reloadAfterDelete
+    reloadAfterDelete: {
+      type: Boolean,
+      default: () => false
+    },
+    // extractId
+    extractId: {
+      type: Function,
+      default: function (theTab) {
+        let selectedId = new TableDataUtil(theTab.tableOptions.tableSelected)
+        return selectedId.getColumn('id')
+      }
+    },
     // 操作区按钮
     ops: {
       type: Array,
@@ -458,9 +471,13 @@ export default {
         { id: theTab.selectedIds }
       )
         .then(function (response) {
-          theTab.thePaginationOpt.tableItemTotal -= theTab.tableOptions.tableSelected.length
-          let tableDataUtil = new TableDataUtil()
-          theTab.tableOptions.tableData = tableDataUtil.diffByColumn(theTab.tableOptions.tableData, 'id', theTab.tableOptions.tableSelected, 'id')
+          if(theTab.reloadAfterDelete) {
+            theTab.tableDataReq()
+          } else {
+            theTab.thePaginationOpt.tableItemTotal -= theTab.tableOptions.tableSelected.length
+            let tableDataUtil = new TableDataUtil()
+            theTab.tableOptions.tableData = tableDataUtil.diffByColumn(theTab.tableOptions.tableData, 'id', theTab.tableOptions.tableSelected, 'id')
+          }
         })
     },
     /**
@@ -543,8 +560,7 @@ export default {
     },
     selectedIds: function () {
       let theTab = this
-      let selectedId = new TableDataUtil(theTab.tableOptions.tableSelected)
-      return selectedId.getColumn('id')
+      return this.extractId(theTab)
     },
     editableColumn: function () {
       let ret = []
