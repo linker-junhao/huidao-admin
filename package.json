@@ -18,7 +18,7 @@
     "core-js": "^2.6.9",
     "element-ui": "latest",
     "js-cookie": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "postcss-loader": "^3.0.0",
     "qrcodejs2": "0.0.2",
     "qs": "latest",
